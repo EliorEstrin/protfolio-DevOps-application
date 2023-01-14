@@ -1,4 +1,7 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify, make_response
+import mongo
+
+
 app = Flask(__name__)
 
 
@@ -9,7 +12,13 @@ def index():
 # Return all the tasks from the data base
 @app.route('/api/tasks', methods=['GET'])
 def tasks_get():
-    return 'GET /api/tasks not implemented'
+    tasks = mongo.get_Tasks()
+    print(type(tasks))
+    #WTF IS IS NOT JSON
+    # response = make_response(jsonify(tasks))
+    # response.headers['Content-Type'] = 'application/json'
+    return jsonify(tasks)
+    # return 'GET /api/tasks not implemented'
 
 # updates a task based on an id
 @app.route('/api/tasks', methods=['POST'])

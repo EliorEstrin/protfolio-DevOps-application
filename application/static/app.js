@@ -113,16 +113,20 @@ $(document).ready(function() {
             success: function(result) {
                 // handle the result here
                 // you can update the page with the result or display a message
-                // console.log(result);
-                // $('#result').html(result);
+                console.log(result);
+                console.log(typeof(result))
+                result.forEach(function(result) {
+            
                 $('tbody').append(
                     '<tr>' +
-                    '<td>' + 'result.task_name' + '</td>' +
+                    '<td>' + 'result.ID' + '</td>' +
+                    '<td>' + 'result.taskName' + '</td>' +
                     '<td>' + 'result.description' + '</td>' +
-                    '<td>' + 'result.assigned_to' + '</td>' +
-                    '<td>' + 'result.priority_level' + '</td>' +
+                    '<td>' + 'result.assignedTo' + '</td>' +
+                    '<td>' + 'result.priority' + '</td>' +
                     '</tr>'
                 );
+              });
             },
             error: function(xhr, status, error) {
                 console.log(error);
