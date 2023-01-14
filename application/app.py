@@ -14,16 +14,27 @@ def index():
 def tasks_get():
     tasks = mongo.get_Tasks()
     print(type(tasks))
-    #WTF IS IS NOT JSON
-    # response = make_response(jsonify(tasks))
-    # response.headers['Content-Type'] = 'application/json'
     return jsonify(tasks)
-    # return 'GET /api/tasks not implemented'
 
 # updates a task based on an id
 @app.route('/api/tasks', methods=['POST'])
 def tasks_post():
-    return 'POST /api/tasks not implemented'
+    data = request.get_json()
+    print(data)
+    task_name = data['task_name']
+    description = data['description']
+    assigned_to = data['assigned_to']
+    priority_level = data['priority_level']
+    mongo.add_task(data)
+    print(data)
+    # Do something with the data, such as saving it to a database
+    return 'Task created'
+
+
+@app.route('/api/health', methods=['GET'])
+def test():
+    return 'ok'
+
 
 # Gets id of a task and changes the information in the data base
 @app.route('/api/tasks/<int:id>', methods=['PUT'])

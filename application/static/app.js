@@ -64,44 +64,44 @@ submit_sort_btn.addEventListener('click', () => hideForm('#sort-task-form'))
 // Using j query from here to fetch responses
 $(document).ready(function() {
 
-    // $('#create_task_btn').click(function(e) {
-    //     e.preventDefault();  // prevent the form from submitting normally
+    $("#create-task-form").submit(function(e) {
+        e.preventDefault();  // prevent the form from submitting normally
+        alert(1)
+        // gather form data
+        var task_name = $('input[name=task_name]').val();
+        var description = $('input[name=description]').val();
+        var assigned_to = $('input[name=assigned_to]').val();
+        var priority_level = $('input[name=priority_level]').val();
 
-    //     // gather form data
-    //     var task_name = $('input[name=task_name]').val();
-    //     var description = $('input[name=description]').val();
-    //     var assigned_to = $('input[name=assigned_to]').val();
-    //     var priority_level = $('input[name=priority_level]').val();
-
-    //     // make the AJAX call
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/api/tasks",
-    //         data: {
-    //             task_name: task_name,
-    //             description: description,
-    //             assigned_to: assigned_to,
-    //             priority_level: priority_level
-    //         },
-    //         success: function(result) {
-    //             // handle the result here
-    //             // you can update the page with the result or display a message
-    //             // console.log(result);
-    //             // $('#result').html(result);
-    //             $('tbody').append(
-    //                 '<tr>' +
-    //                 '<td>' + 'result.task_name1' + '</td>' +
-    //                 '<td>' + 'result.description1' + '</td>' +
-    //                 '<td>' + 'result.assigned_to1' + '</td>' +
-    //                 '<td>' + 'result.priority_level' + '</td>' +
-    //                 '</tr>'
-    //             );
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.log(error);
-    //         }
-    //     });
-    // });
+        // make the AJAX call
+        $.ajax({
+            type: "POST",
+            url: "/api/tasks",
+            data: {
+                task_name: task_name,
+                description: description,
+                assigned_to: assigned_to,
+                priority: priority_level
+            },
+            success: function(result) {
+                // handle the result here
+                // you can update the page with the result or display a message
+                // console.log(result);
+                // $('#result').html(result);
+                $('tbody').append(
+                    '<tr>' +
+                    '<td>' + 'result.task_name1' + '</td>' +
+                    '<td>' + 'result.description1' + '</td>' +
+                    '<td>' + 'result.assigned_to1' + '</td>' +
+                    '<td>' + 'result.priority_level' + '</td>' +
+                    '</tr>'
+                );
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    });
 
 
 
@@ -119,11 +119,11 @@ $(document).ready(function() {
             
                 $('tbody').append(
                     '<tr>' +
-                    '<td>' + 'result.ID' + '</td>' +
-                    '<td>' + 'result.taskName' + '</td>' +
-                    '<td>' + 'result.description' + '</td>' +
-                    '<td>' + 'result.assignedTo' + '</td>' +
-                    '<td>' + 'result.priority' + '</td>' +
+                    '<td>' + result._id + '</td>' +
+                    '<td>' + result.taskName + '</td>' +
+                    '<td>' + result.description + '</td>' +
+                    '<td>' + result.assignedTo + '</td>' +
+                    '<td>' + result.priority + '</td>' +
                     '</tr>'
                 );
               });

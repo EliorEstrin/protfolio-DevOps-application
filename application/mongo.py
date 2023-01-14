@@ -1,5 +1,8 @@
 from pymongo import MongoClient
-from bson import json_util
+import bson.json_util as json_util
+import json
+
+
 
 # Connect to db and creates a db name tasks
 def connection():
@@ -8,27 +11,33 @@ def connection():
     # Creating a data base
     db = client['tasks']
     task_collection = db["task_collection"]
-
     return task_collection
 
 
 def get_Tasks():
     task_collection = connection()
     tasks = task_collection.find()
-    print(json_util.dumps(tasks, default=json_util.default))
-    return json_util.dumps(tasks, default=json_util.default)
-    # return tasks
-    # tasks = task_collection.find()
-    # tasks = [task for task in task_collection.find()]
-    # return tasks
-
-    # 
+    tasks = list(tasks)
+    for task in tasks:
+        task["_id"] = str(task["_id"])
+    return json.loads(json.dumps(tasks, indent=4))
 
 
+def add_task(json_data):
+    test_data = {
+    "task_name": "test task",
+    "description": "This is a test task",
+    "assigned_to": "John Doe",
+    "priority": "high"
+    }
+
+    task_collection = connection()
+    task_collection.insert_one(json_data)
+    
 
 def add_sample_data():
     task_collection = connection()
-   
+
     sample_data = [{
         "taskName": "Task 1",
         "description": "This is the first task",
@@ -47,8 +56,8 @@ def add_sample_data():
 
 
 
-all_task = get_Tasks()
-print(all_task)
+# all_task = get_Tasks()
+# print(all_task)
 # for task in all_task:
 #     print(task)
 
