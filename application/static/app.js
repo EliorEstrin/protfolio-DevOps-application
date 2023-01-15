@@ -66,7 +66,6 @@ submit_sort_btn.addEventListener("click", () => hideForm("#sort-task-form"));
 
 // Using Jquery from here to fetch responses
 $(document).ready(function () {
-
   // Create new task
   $("#create-form").submit(function (e) {
     e.preventDefault(); // prevent the form from submitting normally
@@ -105,7 +104,7 @@ $(document).ready(function () {
         location.reload();
       },
       error: function (xhr, status, error) {
-        alert('Item Not Found');
+        alert("Item Not Found");
         console.log(error);
       },
     });
@@ -129,7 +128,47 @@ $(document).ready(function () {
         location.reload();
       },
       error: function (xhr, status, error) {
-        alert('ID Not Found');
+        alert("ID Not Found");
+      },
+    });
+  });
+
+  //Sort tasks By status
+  $("#sort-form").submit(function (e) {
+    e.preventDefault(); // prevent the form from submitting normally
+    var task_status = $("input[name=task_status_sort]").val();
+    console.log(task_status);
+    $.ajax({
+      type: "GET",
+      url: "/api/tasks/" + task_status,
+      success: function (result) {
+        $("tbody").empty();
+        result.forEach(function (result) {
+            $("tbody").append(
+                "<tr>" +
+                  "<td>" +
+                  result._id +
+                  "</td>" +
+                  "<td>" +
+                  result.taskName +
+                  "</td>" +
+                  "<td>" +
+                  result.description +
+                  "</td>" +
+                  "<td>" +
+                  result.assignedTo +
+                  "</td>" +
+                  "<td>" +
+                  result.priority +
+                  "</td>" +
+                  "</tr>"
+              );
+          });
+        
+      },
+      error: function (xhr, status, error) {
+        console.log(error);
+        alert(2);
       },
     });
   });
