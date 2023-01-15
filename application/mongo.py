@@ -53,14 +53,8 @@ def update_task(task_id,new_description):
         return "Error: Invalid task id"
 
 
-#print(update_task('63c41396c20b76dcc47be361','test22'))
-
-
-
 def sort_by_priority(priority):
     pass
-
-
 
 
 def add_sample_data():
@@ -79,5 +73,5 @@ def add_sample_data():
     }]
     task_collection.insert_many(sample_data)
 
-# add_sample_data()
+
 
