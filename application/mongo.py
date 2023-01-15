@@ -1,5 +1,8 @@
 from pymongo import MongoClient
-import bson.json_util as json_util
+# import bson.json_util as json_util
+# from bson import ObjectId
+from bson import json_util, ObjectId
+
 import json
 
 
@@ -24,16 +27,29 @@ def get_Tasks():
 
 
 def add_task(json_data):
-    test_data = {
-    "task_name": "test task",
-    "description": "This is a test task",
-    "assigned_to": "John Doe",
-    "priority": "high"
-    }
-
     task_collection = connection()
     task_collection.insert_one(json_data)
-    
+
+# Delete tasks
+def delete_task(task_id):
+    task_collection = connection()
+    try:
+        result = task_collection.delete_one({'_id': ObjectId(task_id)})
+        if result.deleted_count == 0:
+            return "Error: Task not found"
+        return "Item deleted"
+    except:
+        return "Error: Invalid task id"
+
+# Update tasks from db
+def update_task(task_id,data):
+    pass
+
+def sort_by_priority(priority):
+    pass
+
+
+
 
 def add_sample_data():
     task_collection = connection()
@@ -51,31 +67,5 @@ def add_sample_data():
     }]
     task_collection.insert_many(sample_data)
 
-# add_sample_data()
 
 
-
-
-# all_task = get_Tasks()
-# print(all_task)
-# for task in all_task:
-#     print(task)
-
-
-
-
-
-
-#isting all the databases
-# print(client.list_database_names())
-# # Accessing the collection
-# coll = db.myCollection
-# coll.insert_one({'name': 'John', 'age': 29})
-
-
-# for doc in coll.find():
-#     print(doc)
-
-
-# # Listing all the collections
-# print(db.list_collection_names())

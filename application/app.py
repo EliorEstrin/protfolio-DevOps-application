@@ -20,15 +20,24 @@ def tasks_get():
 @app.route('/api/tasks', methods=['POST'])
 def tasks_post():
     data = request.get_json()
-    print(data)
-    task_name = data['task_name']
-    description = data['description']
-    assigned_to = data['assigned_to']
-    priority_level = data['priority_level']
+    print(f"data recived in response is: {data}")
     mongo.add_task(data)
-    print(data)
     # Do something with the data, such as saving it to a database
-    return 'Task created'
+    response = jsonify({'status':'success'})
+    response.status_code = 201
+    return response
+
+# Deletes task on given ID
+@app.route('/api/tasks/<task_id>', methods=['DELETE'])
+def delete_task_route(task_id):
+    print(task_id)
+    result = mongo.delete_task(task_id)
+    if result == "Error: Task not found":
+        return result, 404
+    elif result == "Error: Invalid task id":
+        return result, 400
+    else:
+        return result, 200
 
 
 @app.route('/api/health', methods=['GET'])

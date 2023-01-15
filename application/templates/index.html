@@ -1,70 +1,92 @@
-
 <html>
-    <head>
-        <title>Task Management App</title>
-        
-        <link href="/static/styles.css" rel="stylesheet" type="text/css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    </head>
-    <body>
-        
-        <div id="task_management_app">
-            <h1>Task Management App</h1>
-            <div class="options">
-                <button id="option_create" name="option_create">Create Task</button>
-                <button id="option_delete" name="option_delete">Delete Task</button>
-                <button id="option_edit" name="option_edit">Edit Task</button>
-                <button id="option_sort" name="option_sort">Sort By Priority</button>
-            </div>
-            <form>
-            <div id="create-task-form" class="options">
-                <input type="text" name="task_name" placeholder="Enter Task Name">
-                <input type="text" name="description" placeholder="Enter Task Description">
-                <input type="text" name="assigned_to" placeholder="Enter Assigned To">
-                <input type="text" name="priority_level" placeholder="Enter Priority Level">
-                <button type="submit" id="create_task_btn">Create Task</button>
-            </div>
-            </form>
-            <form>
-                <div id="delete-task-form" class="options">
-                    <input type="text" name="task_name" placeholder="Enter Task Name to delete">
-                    <button type="submit" id="delete_task_btn">Delete Task</button>
-                </div>
-            </form>
-           <form>
-                <div id="edit-task-form" class="options">
-                    <input type="text" name="task_id" placeholder="Enter Task Id to edit">
-                    <input type="text" name="description" placeholder="Enter Task Description">
-                    <button type="submit" id="edit_task_btn">Edit Task</button>
-                </div>
-            </form>
-            <form>
-                <div id="sort-task-form" class="options">
-                    <input type="text" name="task_status" placeholder="Enter Task Status to sort">
-                    <button type="submit" id="sort_task_btn">Sort By Priority</button>
-                </div>
-            </form>
-                
-            
-        </div>
-        <div id="result">
-            <table>
-              <thead>
-                <tr>
-                  <th>Task ID</th>
-                  <th>Task Name</th>
-                  <th>Description</th>
-                  <th>Assigned To</th>
-                  <th>Priority Level</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- table rows will be added here -->
-              </tbody>
-            </table>
-          </div>
-        <script src="/static/app.js"></script>
-    </body>
-    </html>
+  <head>
+    <title>Task Management App</title>
 
-    
+    <link href="/static/styles.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="task_management_app">
+      <h1>Task Management App</h1>
+      <div class="options">
+        <button id="option_create" name="option_create">Create Task</button>
+        <button id="option_delete" name="option_delete">Delete Task</button>
+        <button id="option_edit" name="option_edit">Edit Task</button>
+        <button id="option_sort" name="option_sort">Sort By Priority</button>
+      </div>
+      <form id="create-form">
+        <div id="create-task-form" class="options">
+          <input type="text" name="task_name" placeholder="Enter Task Name" />
+          <input
+            type="text"
+            name="description"
+            placeholder="Enter Task Description"
+          />
+          <input
+            type="text"
+            name="assigned_to"
+            placeholder="Enter Assigned To"
+          />
+          <input
+            type="text"
+            name="priority_level"
+            placeholder="Enter Priority Level"
+          />
+          <button type="submit" id="create_task_btn">Create Task</button>
+        </div>
+      </form>
+      <form id="delete-form">
+        <div id="delete-task-form" class="options">
+          <input
+            type="text"
+            name="task_id"
+            placeholder="Enter Task Name to delete"
+          />
+          <button type="submit" id="delete_task_btn">Delete Task</button>
+        </div>
+      </form>
+      <form>
+        <div id="edit-task-form" class="options">
+          <input
+            type="text"
+            name="task_id"
+            placeholder="Enter Task Id to edit"
+          />
+          <input
+            type="text"
+            name="description"
+            placeholder="Enter Task Description"
+          />
+          <button type="submit" id="edit_task_btn">Edit Task</button>
+        </div>
+      </form>
+      <form>
+        <div id="sort-task-form" class="options">
+          <input
+            type="text"
+            name="task_status"
+            placeholder="Enter Task Status to sort"
+          />
+          <button type="submit" id="sort_task_btn">Sort By Priority</button>
+        </div>
+      </form>
+    </div>
+    <div id="result">
+      <table>
+        <thead>
+          <tr>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Description</th>
+            <th>Assigned To</th>
+            <th>Priority Level</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- table rows will be added here -->
+        </tbody>
+      </table>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
