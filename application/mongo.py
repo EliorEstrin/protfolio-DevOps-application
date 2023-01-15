@@ -37,7 +37,7 @@ def delete_task(task_id):
         result = task_collection.delete_one({'_id': ObjectId(task_id)})
         if result.deleted_count == 0:
             return "Error: Task not found"
-        return "Item deleted"
+        return "Item Updated"
     except:
         return "Error: Invalid task id"
 

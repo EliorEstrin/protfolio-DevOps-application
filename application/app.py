@@ -30,7 +30,6 @@ def tasks_post():
 # Deletes task on given ID
 @app.route('/api/tasks/<task_id>', methods=['DELETE'])
 def delete_task_route(task_id):
-    print(task_id)
     result = mongo.delete_task(task_id)
     if result == "Error: Task not found":
         return result, 404
@@ -38,6 +37,36 @@ def delete_task_route(task_id):
         return result, 400
     else:
         return result, 200
+
+# Updates task decription on given ID
+@app.route('/api/tasks/<task_id>', methods=['PUT'])
+def update_task(task_id):
+    data = request.get_json()
+    description = data['description']
+
+    result = mongo.update_task(task_id,description)
+
+    status = ''
+    status_code = ''
+    print("value of result is")
+    print(result)
+    if result == "Error: Task not found":
+        status_code = 404
+        status = 'NotFound'
+    elif result == "Error: Invalid task id":
+        status_code = 400
+        status = 'Invalid'
+    else:
+        status_code = 200
+        status = 'success'
+
+    
+    response = jsonify({'status':"f{status}"})
+    response.status_code = status_code
+
+    return response
+
+   
 
 
 

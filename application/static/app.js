@@ -64,8 +64,9 @@ option_sort_btn.addEventListener("click", () => showForm("#sort-task-form"));
 //After submitted get beremoved
 submit_sort_btn.addEventListener("click", () => hideForm("#sort-task-form"));
 
-// Using j query from here to fetch responses
+// Using Jquery from here to fetch responses
 $(document).ready(function () {
+
   // Create new task
   $("#create-form").submit(function (e) {
     e.preventDefault(); // prevent the form from submitting normally
@@ -76,7 +77,6 @@ $(document).ready(function () {
       priority: $("input[name=priority_level]").val(),
     };
 
-    // make the AJAX call
     $.ajax({
       type: "POST",
       url: "/api/tasks",
@@ -97,7 +97,7 @@ $(document).ready(function () {
   // Delete task
   $("#delete-form").submit(function (event) {
     event.preventDefault();
-    var task_name = $("input[name='task_id']").val();
+    var task_name = $("input[name=task_id]").val();
     $.ajax({
       type: "DELETE",
       url: "/api/tasks/" + task_name,
@@ -111,6 +111,30 @@ $(document).ready(function () {
     });
   });
 
+  //Update Task
+  $("#update-form").submit(function (e) {
+    e.preventDefault(); // prevent the form from submitting normally
+    var task_id = $("input[name=task_id_to_edit]").val();
+    var formData = {
+      description: $("input[name=description_edit]").val(),
+    };
+    $.ajax({
+      type: "PUT",
+      url: "/api/tasks/" + task_id,
+      data: JSON.stringify(formData),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (result) {
+        //reload the page on each change
+        location.reload();
+      },
+      error: function (xhr, status, error) {
+        alert('ID Not Found');
+      },
+    });
+  });
+
+  //Get all tasks
   function loadTasks() {
     // make the AJAX call
     $.ajax({
@@ -119,8 +143,6 @@ $(document).ready(function () {
       success: function (result) {
         // handle the result here
         // you can update the page with the result or display a message
-        console.log(result);
-        console.log(typeof result);
         result.forEach(function (result) {
           $("tbody").append(
             "<tr>" +
