@@ -16,7 +16,7 @@ def tasks_get():
     print(type(tasks))
     return jsonify(tasks)
 
-# updates a task based on an id
+# create a task 
 @app.route('/api/tasks', methods=['POST'])
 def tasks_post():
     data = request.get_json()
@@ -38,6 +38,7 @@ def delete_task_route(task_id):
         return result, 400
     else:
         return result, 200
+
 
 
 @app.route('/api/health', methods=['GET'])
