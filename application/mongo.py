@@ -54,7 +54,13 @@ def update_task(task_id,new_description):
 
 
 def sort_by_priority(priority):
-    pass
+    task_collection = connection()
+    tasks = task_collection.find({"priority": priority})
+    tasks = list(tasks)
+    for task in tasks:
+        task["_id"] = str(task["_id"])
+    return json.loads(json.dumps(tasks, indent=4))
+
 
 
 def add_sample_data():
@@ -75,3 +81,5 @@ def add_sample_data():
 
 
 
+# add_sample_data()
+# print(sort_by_priority("Urgent"))

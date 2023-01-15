@@ -69,21 +69,23 @@ def update_task(task_id):
    
 
 
+# Return all tasks with certein status
+@app.route('/api/tasks/<status>', methods=['GET'])
+def tasks_status(status):
+    tasks = mongo.sort_by_priority(status)
+    print(type(tasks))
+    return jsonify(tasks)
+
+
+
+
+
+
 
 @app.route('/api/health', methods=['GET'])
 def test():
     return 'ok'
 
-
-# Gets id of a task and changes the information in the data base
-@app.route('/api/tasks/<int:id>', methods=['PUT'])
-def tasks_id(id):
-    return 'PUT /api/tasks/<id> not implemented'
-
-# Return all tasks with certein status
-@app.route('/api/tasks/{status}', methods=['GET'])
-def tasks_status(status):
-    return 'GET /api/tasks/{status} not implemented'
 
 
 if __name__ == '__main__':
