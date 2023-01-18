@@ -3,14 +3,13 @@
 ## Prerequisites
 - Python 3.x
 - pip
-  
+
 ## Installation
 
 1. Clone the repository:
-   ```
-   git clone https://github.com/elior7557/task-managment-app.git
-
-   ```
+```
+git clone https://github.com/elior7557/task-managment-app.git
+ ```
 
 2. Change into the project directory:
 ```
