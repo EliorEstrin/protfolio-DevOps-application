@@ -21,8 +21,8 @@ def tasks_get():
 def tasks_post():
     data = request.get_json()
     print(f"data recived in response is: {data}")
+    # saving it to a database
     mongo.add_task(data)
-    # Do something with the data, such as saving it to a database
     response = jsonify({'status':'success'})
     response.status_code = 201
     return response
