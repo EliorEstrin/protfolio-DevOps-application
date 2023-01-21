@@ -1,6 +1,4 @@
 from pymongo import MongoClient
-# import bson.json_util as json_util
-# from bson import ObjectId
 from bson import json_util, ObjectId
 
 import json
@@ -9,8 +7,12 @@ import json
 
 # Connect to db and creates a db name tasks
 def connection():
-    # Creating the connection
-    client = MongoClient("mongodb://root:example@localhost:27017")
+    # Creating the connection FOR DEV-MODE
+    # client = MongoClient("mongodb://root:example@localhost:27017")
+    
+    # DockerCompose mode
+    client = MongoClient("mongodb://root:example@mongo:27017")
+
     # Creating a data base
     db = client['tasks']
     task_collection = db["task_collection"]
