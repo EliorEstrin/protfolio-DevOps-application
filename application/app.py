@@ -22,8 +22,8 @@ def tasks_post():
     data = request.get_json()
     print(f"data recived in response is: {data}")
     # saving it to a database
-    mongo.add_task(data)
-    response = jsonify({'status':'success'})
+    id = mongo.add_task(data)
+    response = jsonify({'status':'success', 'id':f'{id}'})
     response.status_code = 201
     return response
 
@@ -66,8 +66,24 @@ def update_task(task_id):
 
     return response
 
-   
 
+# Get task information with certeain id
+@app.route('/api/tasks/<task_id>', methods=['GET'])
+def get_task(task_id):
+    # Request task with ID
+    task_information = mongo.get_task_with_id(task_id)
+
+    if task_information == "Error: Task not found":
+        status_code = 404
+    elif task_information == "Error: Invalid task id":
+        status_code = 40
+    else:
+        status_code = 200
+    # Make response
+    response = jsonify(task_information)
+    response.status_code = status_code
+    
+    return response
 
 # Return all tasks with certein status
 @app.route('/api/tasks/<status>', methods=['GET'])
