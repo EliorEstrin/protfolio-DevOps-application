@@ -61,14 +61,14 @@ def update_task(task_id):
         status = 'success'
 
     
-    response = jsonify({'status':"f{status}"})
+    response = jsonify({'status':f"{status}"})
     response.status_code = status_code
 
     return response
 
 
 # Get task information with certeain id
-@app.route('/api/tasks/<task_id>', methods=['GET'])
+@app.route('/api/tasks/id/<task_id>', methods=['GET'])
 def get_task(task_id):
     # Request task with ID
     task_information = mongo.get_task_with_id(task_id)
@@ -84,6 +84,7 @@ def get_task(task_id):
     response.status_code = status_code
     
     return response
+
 
 # Return all tasks with certein status
 @app.route('/api/tasks/<status>', methods=['GET'])

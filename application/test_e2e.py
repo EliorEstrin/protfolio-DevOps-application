@@ -47,7 +47,7 @@ def test_can_get_task():
     response = requests.post(ENDPOINT + "/api/tasks", json=single_payload)
     id_data = response.json()['id']
     # Send GET request
-    test_get_id_response = requests.get(ENDPOINT + "/api/tasks/" + id_data, json=single_payload)
+    test_get_id_response = requests.get(ENDPOINT + "/api/tasks/id/" + id_data)
     data = test_get_id_response.json()
 
     # Check respone containes values of that task
@@ -58,7 +58,6 @@ def test_can_get_task():
     assert data["priority"] == single_payload["priority"]
     assert data["taskName"] == single_payload["taskName"]
 
-# Test the the api can return all tasks
 def test_can_get_tasks():
     """
     Test For: GET /api/tasks
@@ -75,21 +74,77 @@ def test_can_get_tasks():
         insert_payload(payload)
     response = requests.get(ENDPOINT + "/api/tasks")
     respone_data = response.json()
-     #Assert that the task names, descriptions, assignedTo, and priority fields match the payloads inserted
-    for task, payload in zip(respone_data, multiple_payloads):
-        assert task["taskName"] == payload["taskName"]
-        assert task["description"] == payload["description"]
-        assert task["assignedTo"] == payload["assignedTo"]
-        assert task["priority"] == payload["priority"]
-
+    
+    # Iterate over respose
+    for payload in multiple_payloads:
+        found = False
+        for task in respone_data:
+            if task["taskName"] == payload["taskName"] and task["description"] == payload["description"] and task["assignedTo"] == payload["assignedTo"] and task["priority"] == payload["priority"]:
+                found = True
+                break
+        assert found, f"Could not find response with correspanding values to payload taskName: {payload['taskName']} in response"
     assert response.status_code == 200
+
+
+def test_can_delete_task():
+    """
+    Test For: DELETE /api/tasks/<taskid>
+
+    This function makes a DELETE request to the endpoint specified in the ENDPOINT variable, passing
+    in the taskid as a path parameter.
+    It asserts that the response's status code is equal to 200 indicating that the task was deleted successfully.
+    """
+    new_task_id = insert_payload(single_payload)['id']
+    response = requests.delete(ENDPOINT + "/api/tasks/" + new_task_id, json=single_payload)
+    assert response.status_code == 200
+
+
+def test_can_update_task():
+    """
+    Test For: PUT /api/tasks/<task_id>
+
+    This function tests the ability to update a task by making a PUT request to the endpoint specified in the ENDPOINT variable, passing in the taskid as a path parameter and a JSON payload containing the updated task information.
+    It asserts that the response contains a 'success' field in the 'status' key and that the status code is 200.
+    """
+    update_new_task_id = insert_payload(single_payload)['id']
+    update_description = {'description' : 'this is a test of updating the description'}
+
+    response = requests.put(ENDPOINT + "/api/tasks/" + update_new_task_id, json=update_description)
+    data = response.json()
+    
+    assert 'success' in data['status'], f"Expected 'success' field in response, but got {data['status']}"
+    assert response.status_code == 200
+
+#/api/tasks/<status>'
+def test_can_sort_by_status():
+
+    status = "Urgent"
+
+    # Make a GET request to the tasks_status endpoint with a specific status
+    response = requests.get(ENDPOINT + '/api/tasks/' + status)
+    data = response.json()
+    
+    # Assert that the response is successful (status code 200)
+    assert response.status_code == 200
+    
+    # Assert that the returned data is a list of tasks
+    assert type(data) == list
+
+    # Assert that the tasks in the list have the correct status
+    for task in data:
+        assert task['priority'] == status
+
 
 
 
 def insert_payload(task):
-   requests.post(ENDPOINT + "/api/tasks", json=task)
+   payload_response = requests.post(ENDPOINT + "/api/tasks", json=task)
+   data = payload_response.json()
+
+   return data
 
 
+# Payloads for functions
 
 single_payload =  {
         "taskName": "Single_Task_Test",
@@ -123,4 +178,4 @@ multiple_payloads = [
 
 
 if __name__ == '__main__':
-    test_can_get_tasks()
+    test_can_sort_by_status()
