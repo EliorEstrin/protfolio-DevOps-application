@@ -58,7 +58,6 @@ $(document).ready(function () {
   //loadTasks will render all tasks on page load
   loadTasks();
 
-
   // When user creates a task generate a window
   create_task_btn.click(function () {
     $("#create-window").append(card_with_form);
@@ -93,16 +92,53 @@ $(document).ready(function () {
   // Edit mode on the btn click
   $(document).on("click", ".edit", function () {
     var card = $(this).closest(".card");
-    card.find(".card-header, .card-title, .card-text span").toggleClass("editable");
-    card.find(".card-header, .card-title, .card-text span").attr("contentEditable", function(_, attr) {
-      return attr == "true" ? false : true;
-    });
+    var taskId = card.attr("id");
+
+    if ($(this).text() === "Confirm Changes") {
+      var taskName = card.find(".card-header").text().trim();
+      var description = card.find(".card-title").text();
+      var assignedTo = card.find(".assinged-to").text();
+      var priority = card.find(".task-priority").text();
+
+      var taskData = {
+        taskName: taskName,
+        description: description,
+        assignedTo: assignedTo,
+        priority: priority,
+      };
+      console.log(taskData);
+      
+      $.ajax({
+        type: "PUT",
+        url: `/api/tasks/${taskId}`,
+        data: JSON.stringify(taskData),
+        contentType: "application/json",
+        success: function(response) {
+          console.log("Task updated successfully");
+        },
+        error: function(error) {
+          console.error("Error updating task:", error);
+        }
+      });
+      
+    }
+
+      
+
+    
+    card
+      .find(".card-header, .card-title, .card-text span")
+      .toggleClass("editable");
+    card
+      .find(".card-header, .card-title, .card-text span")
+      .attr("contentEditable", function (_, attr) {
+        return attr == "true" ? false : true;
+      });
     card.find(".card-header").focus();
-    $(this).text(function(i, text) {
+    $(this).text(function (i, text) {
       return text === "Edit" ? "Confirm Changes" : "Edit";
     });
   });
-  
 });
 
 // create_task_to_render is a function to make the task that will be rendered in the main div
@@ -120,8 +156,8 @@ function create_task_to_render(
   </div>
   <div class="card-body">
     <h5 class="card-title text-center h4">${task_description}</h5>
-    <p class="card-text text-center">Assigned To: <span class="font-weight-bold">${task_assinged_to}</span></p>
-    <p class="card-text text-center">Priority Level: <span class="font-weight-bold">${task_priority}</span></p>
+    <p class="card-text text-center">Assigned To: <span class="assinged-to font-weight-bold">${task_assinged_to}</span></p>
+    <p class="card-text text-center">Priority Level: <span class="task-priority font-weight-bold">${task_priority}</span></p>
     <div class="d-grid gap-2 col-2 mx-auto">
     <a class="btn btn-primary edit">Edit</a>
     <a class="btn btn-danger">Delete</a>
