@@ -23,17 +23,17 @@ let card_with_form = `
     <form>
       <div class="input-group mb-3 form-control-lg">
         <span class="input-group-text">Task Name</span>
-        <input type="text" aria-label="Last name" class="form-control">
+        <input type="text" aria-label="Last name" class="form-control" name="input-taskName">
       </div>
 
       <div class="input-group mb-3 form-control-lg">
         <span class="input-group-text">Task Description</span>
-        <input type="text" aria-label="Last name" class="form-control">
+        <input type="text" aria-label="Last name" class="form-control" name="input-description">
       </div>
 
       <div class="input-group form-control-lg  mb-3">
         <span class="input-group-text">Assinged To</span>
-        <input type="text" aria-label="Last name" class="form-control">
+        <input type="text" aria-label="Last name" class="form-control" name="input-assingTo">
       </div>
 
       <div class="input-group mb-3 form-control-lg">
@@ -46,25 +46,67 @@ let card_with_form = `
       </div>
 
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="submit-task" class="btn btn-primary">Submit</button>
     </form>
 </div>
 </div>
 `;
 
+// importand btns
 const create_task_btn = $("#create-task");
 
 $(document).ready(function () {
   //loadTasks will render all tasks on page load
   loadTasks();
 
+
   // When user creates a task generate a window
   create_task_btn.click(function () {
-    $("#create-window").append(card_with_form);
+    $("#create-window").append(card_with_form);  
   });
 
+
+  // Sumbit of a new task
+  $(document).on("click", "#submit-task", function (e) {
+    e.preventDefault(); // prevent the form from submitting normally
+
+    var form_taskName = $("input[name=input-taskName]").val()
+    var form_description = $("input[name=input-description]").val()
+    var form_assignedTo = $("input[name=input-assingTo]").val()
+    var form_priority = $('.form-select').find(":selected").text();
+    
+    var formData = {
+      taskName: form_taskName,
+      description: form_description,
+      assignedTo: form_assignedTo,
+      priority: form_priority,
+    };    
+    console.log(formData)
+
+    // Send POST /api/tasks to create a task
+    $.ajax({
+      type: "POST",
+      url: "/api/tasks",
+      data: JSON.stringify(formData),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: function (result) {
+        loadTasks()
+        //reload the page on each change
+        // location.reload();
+      },
+      error: function (xhr, status, error) {
+        console.log(error);
+      },
+    });
+  });  
+
   //function to load all the task GET /api/tasks
+
   function loadTasks() {
+    //empty before loading if not already
+    $("#main").empty();
+
     $.ajax({
       type: "GET",
       url: "/api/tasks",
@@ -120,7 +162,7 @@ $(document).ready(function () {
           console.error("Error updating task:", error);
         }
       });
-      
+
     }
 
       
