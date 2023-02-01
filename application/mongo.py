@@ -8,10 +8,10 @@ import json
 # Connect to db and creates a db name tasks
 def connection():
     # Creating the connection FOR DEV-MODE
-    # client = MongoClient("mongodb://root:example@localhost:27017")
+    client = MongoClient("mongodb://root:example@localhost:27017")
     
     # DockerCompose mode
-    client = MongoClient("mongodb://root:example@mongo:27017")
+    # client = MongoClient("mongodb://root:example@mongo:27017")
 
     # Creating a data base
     db = client['tasks']
@@ -28,9 +28,25 @@ def get_Tasks():
     return json.loads(json.dumps(tasks, indent=4))
 
 
+# Get task with spesific id
+def get_task_with_id(task_id):
+    try:
+        task_collection = connection()
+        task = task_collection.find_one({'_id': ObjectId(task_id)})
+        if task is None:
+            return "Error: Task not found"
+    except:
+        return "Error: Invalid task id"
+
+    # Parse it to return a json
+    task["_id"] = str(task["_id"])
+    return json.loads(json.dumps(task, indent=4))
+
+
 def add_task(json_data):
     task_collection = connection()
-    task_collection.insert_one(json_data)
+    result = task_collection.insert_one(json_data)
+    return result.inserted_id
 
 # Delete tasks
 def delete_task(task_id):
@@ -39,7 +55,7 @@ def delete_task(task_id):
         result = task_collection.delete_one({'_id': ObjectId(task_id)})
         if result.deleted_count == 0:
             return "Error: Task not found"
-        return "Item Updated"
+        return "Item Deleted"
     except:
         return "Error: Invalid task id"
 
@@ -85,3 +101,14 @@ def add_sample_data():
 
 # add_sample_data()
 # print(sort_by_priority("Urgent"))
+
+# Dev ADD task
+data = {
+        "taskName": "Task_Test",
+        "description": "This is a Test taska",
+        "assignedTo": "John Doe",
+        "priority": "Urgent"
+    }
+# print(add_task(data))
+
+# print(get_task_with_id("63d24cbe9ebd14e0487529a2"))
