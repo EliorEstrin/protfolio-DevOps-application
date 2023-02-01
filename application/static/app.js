@@ -121,6 +121,7 @@ function create_task_to_render(
   <div class="card-body">
     <h5 class="card-title text-center h4">${task_description}</h5>
     <p class="card-text text-center">Assigned To: <span class="font-weight-bold">${task_assinged_to}</span></p>
+    <p class="card-text text-center">Priority Level: <span class="font-weight-bold">${task_priority}</span></p>
     <div class="d-grid gap-2 col-2 mx-auto">
     <a class="btn btn-primary edit">Edit</a>
     <a class="btn btn-danger">Delete</a>
