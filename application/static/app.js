@@ -55,7 +55,7 @@ let card_with_form = `
 const create_task_btn = $("#create-task");
 
 $(document).ready(function () {
-  //render all tasks
+  //loadTasks will render all tasks on page load
   loadTasks();
 
   // When user creates a task generate a window
