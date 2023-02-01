@@ -58,6 +58,7 @@ $(document).ready(function () {
   //loadTasks will render all tasks on page load
   loadTasks();
 
+
   // When user creates a task generate a window
   create_task_btn.click(function () {
     $("#create-window").append(card_with_form);
@@ -72,7 +73,15 @@ $(document).ready(function () {
         console.log(result);
         // render the result
         result.forEach(function (result) {
-          $("#main").append(create_task_to_render(result._id,result.taskName,result.description ,result.priority,result.assignedTo));
+          $("#main").append(
+            create_task_to_render(
+              result._id,
+              result.taskName,
+              result.description,
+              result.priority,
+              result.assignedTo
+            )
+          );
         });
       },
       error: function (xhr, status, error) {
@@ -80,8 +89,21 @@ $(document).ready(function () {
       },
     });
   }
-});
 
+  // Edit mode on the btn click
+  $(document).on("click", ".edit", function () {
+    var card = $(this).closest(".card");
+    card.find(".card-header, .card-title, .card-text span").toggleClass("editable");
+    card.find(".card-header, .card-title, .card-text span").attr("contentEditable", function(_, attr) {
+      return attr == "true" ? false : true;
+    });
+    card.find(".card-header").focus();
+    $(this).text(function(i, text) {
+      return text === "Edit" ? "Confirm Changes" : "Edit";
+    });
+  });
+  
+});
 
 // create_task_to_render is a function to make the task that will be rendered in the main div
 function create_task_to_render(
@@ -91,8 +113,7 @@ function create_task_to_render(
   task_priority,
   task_assinged_to
 ) {
-
-  return`
+  return `
   <div id="${task_id}" class="card mb-4">
   <div class="card-header text-center h2">
     ${task_name}
@@ -101,8 +122,8 @@ function create_task_to_render(
     <h5 class="card-title text-center h4">${task_description}</h5>
     <p class="card-text text-center">Assigned To: <span class="font-weight-bold">${task_assinged_to}</span></p>
     <div class="d-grid gap-2 col-2 mx-auto">
-    <a href="#" class="btn btn-primary">Edit</a>
-    <a href="#" class="btn btn-danger">Delete</a>
+    <a class="btn btn-primary edit">Edit</a>
+    <a class="btn btn-danger">Delete</a>
   </div>
   </div>
   </div>
