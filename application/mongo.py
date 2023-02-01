@@ -60,15 +60,30 @@ def delete_task(task_id):
         return "Error: Invalid task id"
 
 # Update tasks from db
-def update_task(task_id,new_description):
+# def update_task(task_id,new_description):
+#     # Get Data
+#     # Print data
+#     task_collection = connection()
+#     try:
+#         result = task_collection.update_one({"_id": ObjectId(task_id)}, {"$set": {"description": new_description}})
+#         if result.matched_count == 0:
+#             return "Error: Task not found"
+#         return "Item was updated"
+#     except:
+#         return "Error: Invalid task id"
+
+
+def update_task(task_id, new_data):
     task_collection = connection()
     try:
-        result = task_collection.update_one({"_id": ObjectId(task_id)}, {"$set": {"description": new_description}})
+        result = task_collection.update_one({'_id': ObjectId(task_id)}, {'$set': new_data})
         if result.matched_count == 0:
             return "Error: Task not found"
         return "Item was updated"
     except:
         return "Error: Invalid task id"
+
+
 
 
 def sort_by_priority(priority):
@@ -104,7 +119,7 @@ def add_sample_data():
 
 # Dev ADD task
 data = {
-        "taskName": "Task_Test",
+        "taskName": "Task_Test99",
         "description": "This is a Test taska",
         "assignedTo": "John Doe",
         "priority": "Urgent"
@@ -112,3 +127,5 @@ data = {
 # print(add_task(data))
 
 # print(get_task_with_id("63d24cbe9ebd14e0487529a2"))
+
+# print(update_by_json("63da4e32450fc118963dd6df",data))

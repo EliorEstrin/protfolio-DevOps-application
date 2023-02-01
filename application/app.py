@@ -42,9 +42,9 @@ def delete_task_route(task_id):
 @app.route('/api/tasks/<task_id>', methods=['PUT'])
 def update_task(task_id):
     data = request.get_json()
-    description = data['description']
+    # description = data['description']
 
-    result = mongo.update_task(task_id,description)
+    result = mongo.update_task(task_id,data)
 
     status = ''
     status_code = ''
@@ -68,7 +68,7 @@ def update_task(task_id):
 
 
 # Get task information with certeain id
-@app.route('/api/tasks/id/<task_id>', methods=['GET'])
+@app.route('/api/tasks/<task_id>', methods=['GET'])
 def get_task(task_id):
     # Request task with ID
     task_information = mongo.get_task_with_id(task_id)
@@ -87,7 +87,7 @@ def get_task(task_id):
 
 
 # Return all tasks with certein status
-@app.route('/api/tasks/<status>', methods=['GET'])
+@app.route('/api/tasks/status/<status>', methods=['GET'])
 def tasks_status(status):
     tasks = mongo.sort_by_priority(status)
     print(type(tasks))

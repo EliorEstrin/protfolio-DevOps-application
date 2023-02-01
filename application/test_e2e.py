@@ -47,7 +47,7 @@ def test_can_get_task():
     response = requests.post(ENDPOINT + "/api/tasks", json=single_payload)
     id_data = response.json()['id']
     # Send GET request
-    test_get_id_response = requests.get(ENDPOINT + "/api/tasks/id/" + id_data)
+    test_get_id_response = requests.get(ENDPOINT + "/api/tasks/" + id_data)
     data = test_get_id_response.json()
 
     # Check respone containes values of that task
@@ -107,13 +107,24 @@ def test_can_update_task():
     It asserts that the response contains a 'success' field in the 'status' key and that the status code is 200.
     """
     update_new_task_id = insert_payload(single_payload)['id']
-    update_description = {'description' : 'this is a test of updating the description'}
 
-    response = requests.put(ENDPOINT + "/api/tasks/" + update_new_task_id, json=update_description)
+
+    response = requests.put(ENDPOINT + "/api/tasks/" + update_new_task_id, json=update_payload)
     data = response.json()
+
     
     assert 'success' in data['status'], f"Expected 'success' field in response, but got {data['status']}"
     assert response.status_code == 200
+
+    # Get the updated task and check if the data matches the expected data
+    get_response = requests.get(ENDPOINT + "/api/tasks/" + update_new_task_id)
+    get_data = get_response.json()
+    assert get_data["_id"] == update_new_task_id, f"Expected an id to be {update_new_task_id}, but got {get_data['_id']}"
+    assert get_data['taskName'] == update_payload['taskName'], f"Expected taskName to be {update_payload['taskName']}, but got {get_data['taskName'] }"
+    assert get_data['description'] == update_payload['description'], f"Expected description to be {update_payload['description']}, but got {get_data['description'] }"
+    assert get_data['assignedTo'] == update_payload['assignedTo'], f"Expected assignedTo to be {update_payload['assignedTo']}, but got {get_data['assignedTo'] }"
+    assert get_data['priority'] == update_payload['priority'], f"Expected priority to be {update_payload['priority']}, but got {get_data['priority'] }"
+
 
 #/api/tasks/<status>'
 def test_can_sort_by_status():
@@ -121,7 +132,7 @@ def test_can_sort_by_status():
     status = "Urgent"
 
     # Make a GET request to the tasks_status endpoint with a specific status
-    response = requests.get(ENDPOINT + '/api/tasks/' + status)
+    response = requests.get(ENDPOINT + '/api/tasks/status/' + status)
     data = response.json()
     
     # Assert that the response is successful (status code 200)
@@ -174,8 +185,14 @@ multiple_payloads = [
     }
 ]
 
+update_payload = {
+        "taskName": "Single_Task__update_Test",
+        "description": "This is a Test to update atask",
+        "assignedTo": "John Doe 2",
+        "priority": "High"
+}
 
 
 
 if __name__ == '__main__':
-    test_can_sort_by_status()
+    test_can_update_task()
