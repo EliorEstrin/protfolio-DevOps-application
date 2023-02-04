@@ -59,29 +59,27 @@ $(document).ready(function () {
   //loadTasks will render all tasks on page load
   loadTasks();
 
-
   // When user creates a task generate a window
   create_task_btn.click(function () {
-    $("#create-window").append(card_with_form);  
+    $("#create-window").append(card_with_form);
   });
-
 
   // Sumbit of a new task
   $(document).on("click", "#submit-task", function (e) {
     e.preventDefault(); // prevent the form from submitting normally
 
-    var form_taskName = $("input[name=input-taskName]").val()
-    var form_description = $("input[name=input-description]").val()
-    var form_assignedTo = $("input[name=input-assingTo]").val()
-    var form_priority = $('.form-select').find(":selected").text();
-    
+    var form_taskName = $("input[name=input-taskName]").val();
+    var form_description = $("input[name=input-description]").val();
+    var form_assignedTo = $("input[name=input-assingTo]").val();
+    var form_priority = $(".form-select").find(":selected").text();
+
     var formData = {
       taskName: form_taskName,
       description: form_description,
       assignedTo: form_assignedTo,
       priority: form_priority,
-    };    
-    console.log(formData)
+    };
+    console.log(formData);
 
     // Send POST /api/tasks to create a task
     $.ajax({
@@ -91,7 +89,7 @@ $(document).ready(function () {
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function (result) {
-        loadTasks()
+        loadTasks();
         //reload the page on each change
         // location.reload();
       },
@@ -99,10 +97,9 @@ $(document).ready(function () {
         console.log(error);
       },
     });
-  });  
+  });
 
   //function to load all the task GET /api/tasks
-
   function loadTasks() {
     //empty before loading if not already
     $("#main").empty();
@@ -131,6 +128,24 @@ $(document).ready(function () {
     });
   }
 
+  // Delete card on btn click
+  $(document).on("click", ".delete", function () {
+    var card = $(this).closest(".card");
+    var taskId = card.attr("id");
+    $.ajax({
+      type: "DELETE",
+      url: `/api/tasks/${taskId}`,
+      success: function (response) {
+        console.log("Task delete successfully");
+        loadTasks();
+        
+      },
+      error: function (error) {
+        console.error("Error updating task:", error);
+      },
+    });
+  });
+
   // Edit mode on the btn click
   $(document).on("click", ".edit", function () {
     var card = $(this).closest(".card");
@@ -149,25 +164,21 @@ $(document).ready(function () {
         priority: priority,
       };
       console.log(taskData);
-      
+
       $.ajax({
         type: "PUT",
         url: `/api/tasks/${taskId}`,
         data: JSON.stringify(taskData),
         contentType: "application/json",
-        success: function(response) {
+        success: function (response) {
           console.log("Task updated successfully");
         },
-        error: function(error) {
+        error: function (error) {
           console.error("Error updating task:", error);
-        }
+        },
       });
-
     }
 
-      
-
-    
     card
       .find(".card-header, .card-title, .card-text span")
       .toggleClass("editable");
@@ -202,7 +213,7 @@ function create_task_to_render(
     <p class="card-text text-center">Priority Level: <span class="task-priority font-weight-bold">${task_priority}</span></p>
     <div class="d-grid gap-2 col-2 mx-auto">
     <a class="btn btn-primary edit">Edit</a>
-    <a class="btn btn-danger">Delete</a>
+    <a class="btn btn-danger delete">Delete</a>
   </div>
   </div>
   </div>
