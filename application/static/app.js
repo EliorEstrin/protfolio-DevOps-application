@@ -52,21 +52,33 @@ let card_with_form = `
 </div>
 `;
 
-// importand btns
+// A reference to the create task button element in the DOM.
 const create_task_btn = $("#create-task");
 
 $(document).ready(function () {
   //loadTasks will render all tasks on page load
   loadTasks();
 
-  // When user creates a task generate a window
+  // A click event listener for the create task button that appends the form for creating a task.
   create_task_btn.click(function () {
     $("#create-window").append(card_with_form);
   });
 
-  // Sumbit of a new task
+  /**
+ * submit-task click event listener
+ * 
+ * @description A click event listener for the submit task button that submits the task creation form via an AJAX request to the server.
+ * @event
+ * 
+ * 1. Prevent default form submit behavior
+ * 2. Gather form data from the DOM
+ * 3. Stringify the form data
+ * 4. Make a POST request to the "/api/tasks" endpoint
+ * 5. On success, call the loadTasks() function
+ * 6. On error, log the error to the console
+ */
   $(document).on("click", "#submit-task", function (e) {
-    e.preventDefault(); // prevent the form from submitting normally
+    e.preventDefault();
 
     var form_taskName = $("input[name=input-taskName]").val();
     var form_description = $("input[name=input-description]").val();
@@ -90,8 +102,6 @@ $(document).ready(function () {
       dataType: "json",
       success: function (result) {
         loadTasks();
-        //reload the page on each change
-        // location.reload();
       },
       error: function (xhr, status, error) {
         console.log(error);
@@ -99,7 +109,16 @@ $(document).ready(function () {
     });
   });
 
-  //function to load all the task GET /api/tasks
+  /**
+ * loadTasks
+ * 
+ * @description A function that retrieves all tasks from the server and appends them to the main element in the DOM.
+ * 
+ * 1. Empties the main element in the DOM
+ * 2. Makes a GET request to the "/api/tasks" endpoint
+ * 3. On success, render each task
+ * 4. On error, log the error to the console
+ */
   function loadTasks() {
     //empty before loading if not already
     $("#main").empty();
@@ -128,7 +147,17 @@ $(document).ready(function () {
     });
   }
 
-  // Delete card on btn click
+  /**
+ * delete button click event listener
+ * 
+ * @description A click event listener for the delete button that deletes a task from the server and reloads all tasks.
+ * @event
+ * 
+ * 1. Retrieve the task ID from the closest parent card element
+ * 2. Make a DELETE request to the "/api/tasks/{taskId}" endpoint
+ * 3. On success, log a message to the console and call the loadTasks() function
+ * 4. On error, log an error message to the console
+ */
   $(document).on("click", ".delete", function () {
     var card = $(this).closest(".card");
     var taskId = card.attr("id");
@@ -146,7 +175,15 @@ $(document).ready(function () {
     });
   });
 
-  // Edit mode on the btn click
+  /**
+ * Edit Task
+ * 
+ * Toggles the task card's editable mode on button click.
+ * .closest is used to find the parent card to find the elements that need to be editibale  
+ * Sends an HTTP PUT request to the server to update the task.
+ * 
+ * @event click on ".edit" button
+ */
   $(document).on("click", ".edit", function () {
     var card = $(this).closest(".card");
     var taskId = card.attr("id");
@@ -194,7 +231,19 @@ $(document).ready(function () {
   });
 });
 
-// create_task_to_render is a function to make the task that will be rendered in the main div
+/**
+ * create_task_to_render
+ * 
+ * This function is used to create the HTML string that represents a task to be rendered in the main div.
+ * 
+ * @param {string} task_id - The unique identifier for the task
+ * @param {string} task_name - The name of the task
+ * @param {string} task_description - The description of the task
+ * @param {string} task_priority - The priority level of the task
+ * @param {string} task_assinged_to - The person the task is assigned to
+ * 
+ * @return {string} - The HTML string representation of the task
+ */
 function create_task_to_render(
   task_id,
   task_name,
