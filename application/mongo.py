@@ -21,7 +21,6 @@ def connection():
     task_collection = db["task_collection"]
     return task_collection
 
-
 def get_Tasks():
     """
     This function retrieves all the tasks stored in the database.
@@ -108,7 +107,6 @@ def delete_task(task_id):
         return "Item Deleted"
     except:
         return "Error: Invalid task id"
-
 
 def update_task(task_id, new_data):
     """
