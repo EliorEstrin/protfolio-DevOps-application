@@ -8,10 +8,10 @@ import json
 # Connect to db and creates a db name tasks
 def connection():
     # Creating the connection FOR DEV-MODE
-    client = MongoClient("mongodb://root:example@localhost:27017")
+    # client = MongoClient("mongodb://root:example@localhost:27017")
     
     # DockerCompose mode
-    # client = MongoClient("mongodb://root:example@mongo:27017")
+    client = MongoClient("mongodb://root:example@mongo:27017")
 
     # Creating a data base
     db = client['tasks']
@@ -59,19 +59,6 @@ def delete_task(task_id):
     except:
         return "Error: Invalid task id"
 
-# Update tasks from db
-# def update_task(task_id,new_description):
-#     # Get Data
-#     # Print data
-#     task_collection = connection()
-#     try:
-#         result = task_collection.update_one({"_id": ObjectId(task_id)}, {"$set": {"description": new_description}})
-#         if result.matched_count == 0:
-#             return "Error: Task not found"
-#         return "Item was updated"
-#     except:
-#         return "Error: Invalid task id"
-
 
 def update_task(task_id, new_data):
     task_collection = connection()
@@ -82,8 +69,6 @@ def update_task(task_id, new_data):
         return "Item was updated"
     except:
         return "Error: Invalid task id"
-
-
 
 
 def sort_by_priority(priority):
