@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "devops"]
   pull_request:
     branches: [ "master" ]
 
@@ -17,6 +17,6 @@ jobs:
     - name: Build the Docker compose
       run: docker compose -f application/docker-compose.yml up -d
     - name: e2e test
-      run: python --version
+      run: pytest application/ 
 
     
