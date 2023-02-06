@@ -31,6 +31,7 @@ jobs:
       run: docker compose -f application/docker-compose.yml up -d
     - name: Test with pytest
       run: |
+        sleep 5
         pytest application/
 
     
