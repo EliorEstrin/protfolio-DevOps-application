@@ -64,6 +64,7 @@ jobs:
       # if: ${{ github.ref == 'refs/heads/main' }}
       run: |
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
       
       
 
