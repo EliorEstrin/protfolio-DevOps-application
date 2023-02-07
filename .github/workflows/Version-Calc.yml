@@ -20,3 +20,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.API_GITHUB_TOKEN }}
         WITH_V: false
         DEFAULT_BUMP: patch
+        INITIAL_VERSION: 1.0.0
