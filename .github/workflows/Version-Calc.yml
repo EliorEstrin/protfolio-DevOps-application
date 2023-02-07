@@ -23,6 +23,6 @@ jobs:
         INITIAL_VERSION: 1.0.0
     - name: Echo outputs
       run: |
-        echo "new_tag: ${{ outputs.tag }}"
+        echo "new_tag: $(outputs.tag)"
 # echo "tag: ${{ tag }}"
 # echo "part: ${{ part }}"
