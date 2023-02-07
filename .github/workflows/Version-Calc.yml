@@ -2,6 +2,7 @@
 # example 2: on merge to master
 name: Bump version
 on:
+  push:
     branches:
       - devops
 jobs:
