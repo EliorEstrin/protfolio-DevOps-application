@@ -16,18 +16,17 @@ def connection():
     if DB_ENDPOINT:
         print(f"The value of MY_VAR is: {DB_ENDPOINT}")
     else:
-        print("DB_ENDPOINT is not set.")
+        print("DB_ENDPOINT is not set.... Exiting.")
         # Setting Value for CI
-        DB_ENDPOINT = "mongodb://root:example@mongo:27017"
-        
+        sys.exit(1)
 
-    # Creating the connection FOR DEV-MODE
-    # client = MongoClient("mongodb://root:example@localhost:27017")
-    
-    # DockerCompose mode
-    # client = MongoClient("mongodb://root:example@mongo:27017")
-    
-    client = MongoClient(DB_ENDPOINT)
+
+    try:
+      client = MongoClient(DB_ENDPOINT)
+    except Exception as e:
+        print("failed to Connect to db... Exiting", e)
+        sys.exit(1)
+
 
     # Creating a data base
     db = client['tasks']

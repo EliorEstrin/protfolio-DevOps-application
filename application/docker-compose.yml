@@ -13,6 +13,10 @@ services:
     build: .
     ports:
       - 5000:5000
+    environment:
+      # For CI to pass
+      DB_ENDPOINT: "mongodb://root:example@mongo:27017"
+      
   mongo:
     image: mongo
     restart: always
