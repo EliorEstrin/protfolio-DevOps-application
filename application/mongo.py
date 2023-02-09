@@ -19,9 +19,7 @@ def connection():
         print("DB_ENDPOINT is not set.")
         # Setting Value for CI
         DB_ENDPOINT = "mongodb://root:example@mongo:27017"
-        # sys.exit(1)
         
-
 
     # Creating the connection FOR DEV-MODE
     # client = MongoClient("mongodb://root:example@localhost:27017")
@@ -35,8 +33,6 @@ def connection():
     db = client['tasks']
     task_collection = db["task_collection"]
     return task_collection
-
-connection()
 
 def get_Tasks():
     """
