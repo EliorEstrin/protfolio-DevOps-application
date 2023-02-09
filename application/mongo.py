@@ -1,7 +1,8 @@
 from pymongo import MongoClient
 from bson import json_util, ObjectId
 import json
-
+import os
+import sys
 
 def connection():
     """
@@ -10,16 +11,32 @@ def connection():
     Returns:
         task_collection (pymongo.collection.Collection): A collection for task documents in the database.
     """
+    # URL for the data base
+    DB_ENDPOINT = os.environ.get('DB_ENDPOINT')
+    if DB_ENDPOINT:
+        print(f"The value of MY_VAR is: {DB_ENDPOINT}")
+    else:
+        print("DB_ENDPOINT is not set.")
+        # Setting Value for CI
+        DB_ENDPOINT = "mongodb://root:example@mongo:27017"
+        # sys.exit(1)
+        
+
+
     # Creating the connection FOR DEV-MODE
     # client = MongoClient("mongodb://root:example@localhost:27017")
     
     # DockerCompose mode
-    client = MongoClient("mongodb://root:example@mongo:27017")
+    # client = MongoClient("mongodb://root:example@mongo:27017")
+    
+    client = MongoClient(DB_ENDPOINT)
 
     # Creating a data base
     db = client['tasks']
     task_collection = db["task_collection"]
     return task_collection
+
+connection()
 
 def get_Tasks():
     """
