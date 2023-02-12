@@ -78,7 +78,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
         cd todo_chart
-        new_tag="${{ CI.outputs.new_tag }}"
+        new_tag="${{ needs.CI.outputs.new_tag }}"
         sed -i "s/tag:.*/tag: $new_tag/" values.yaml
         
         git config --global user.email "github@git.com"
