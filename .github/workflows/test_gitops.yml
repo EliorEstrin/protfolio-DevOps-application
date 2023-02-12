@@ -16,4 +16,5 @@ jobs:
 
     - name: change version
       run: |
+        pushd todo_chart
         ls   
