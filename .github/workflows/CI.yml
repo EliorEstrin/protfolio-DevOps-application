@@ -52,7 +52,7 @@ jobs:
         WITH_V: false
         DEFAULT_BUMP: patch
         INITIAL_VERSION: 1.0.0
-        DEFAULT_BRANCH: devops
+        DEFAULT_BRANCH: test
 
     # - name: Login to Docker Hub
     #   if: ${{ github.ref == 'refs/heads/master' }}
@@ -74,6 +74,7 @@ jobs:
         repository: elior7557/protfolio_charts
         ref: master
         token: ${{ secrets.API_GITHUB_TOKEN }}
+
 
     - name: change version and push change to gitops repo
       run: |
