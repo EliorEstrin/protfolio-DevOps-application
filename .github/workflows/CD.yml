@@ -3,11 +3,11 @@ name: CD
 on:
   workflow_run:
     workflows: [CI]
-    branches: [main, test]
+    # branches: [main, test]
     types:
       - completed
-jobs:
 
+jobs:
   CD:
     # needs: [CI]
     runs-on: ubuntu-latest
