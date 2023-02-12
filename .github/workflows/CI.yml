@@ -78,7 +78,7 @@ jobs:
 
     - name: change version and push change to gitops repo
       run: |
-        pushd todo_chart
+        cd todo_chart
         new_tag = "${{ steps.tag.outputs.new_tag }}"
         sed -i "s/tag:.*/tag: $(new_tag)/" values.yaml
         cat values.yaml
