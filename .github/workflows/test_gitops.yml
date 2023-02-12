@@ -1,0 +1,15 @@
+name: Tets GitOps Update
+on:
+  push:
+    branches:
+      - test
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: 'elior7557/protfolio_gitops'
+        fetch-depth: '0'
+        token: ${{ secrets.API_GITHUB_TOKEN }}
+        
