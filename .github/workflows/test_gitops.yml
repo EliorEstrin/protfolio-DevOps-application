@@ -12,6 +12,7 @@ jobs:
     
     - name: get the version and set it as output
       run: |
+        git checkout master
         echo "the tag is $(git describe --tags)"
       # outputs: ${{ steps. }}
         
