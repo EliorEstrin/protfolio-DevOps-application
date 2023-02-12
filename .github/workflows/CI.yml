@@ -69,35 +69,35 @@ jobs:
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
 
-  CD:
-    needs: [CI]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
+  # CD:
+  #   needs: [CI]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
     
-    - name: checkout charts repo
-      #if: ${{ github.ref == 'refs/heads/master' }}
-      uses: actions/checkout@v3
-      with:
-        repository: elior7557/protfolio_charts
-        ref: master
-        token: ${{ secrets.API_GITHUB_TOKEN }}
+  #   - name: checkout charts repo
+  #     #if: ${{ github.ref == 'refs/heads/master' }}
+  #     uses: actions/checkout@v3
+  #     with:
+  #       repository: elior7557/protfolio_charts
+  #       ref: master
+  #       token: ${{ secrets.API_GITHUB_TOKEN }}
 
 
-    - name: change version and push change to gitops repo
-      #if: ${{ github.ref == 'refs/heads/master' }}
-      run: |
-        cd todo_chart
-        new_tag="${{ steps.tag.outputs.new_tag }}"
-        sed -i "s/tag:.*/tag: $new_tag/" values.yaml
+  #   - name: change version and push change to gitops repo
+  #     #if: ${{ github.ref == 'refs/heads/master' }}
+  #     run: |
+  #       cd todo_chart
+  #       new_tag="${{ steps.tag.outputs.new_tag }}"
+  #       sed -i "s/tag:.*/tag: $new_tag/" values.yaml
         
-        git config --global user.email "github@git.com"
-        git config --global user.name "github actions"
+  #       git config --global user.email "github@git.com"
+  #       git config --global user.name "github actions"
 
-        git add values.yaml
-        git commit -m "new version | Git Hub Actions"\
+  #       git add values.yaml
+  #       git commit -m "new version | Git Hub Actions"\
         
-        git push origin master
+  #       git push origin master
       
         
 
