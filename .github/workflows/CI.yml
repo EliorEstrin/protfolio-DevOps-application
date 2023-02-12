@@ -61,7 +61,7 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
 
   CD:
-    needs: [CI]
+    needs: CI
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
