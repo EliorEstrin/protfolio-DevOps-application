@@ -80,7 +80,7 @@ jobs:
       run: |
         cd todo_chart
         new_tag = "${{ steps.tag.outputs.new_tag }}"
-        sed -i "s/tag:.*/tag: $(new_tag)/" values.yaml
+        sed -i "s/tag:.*/tag: $new_tag/" values.yaml
         cat values.yaml
       
       
