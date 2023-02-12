@@ -9,7 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        repository: 'elior7557/protfolio_gitops'
-        ref: 'master'
-        fetch-depth: '0'
+        repository: elior7557/protfolio_gitops
+        ref: master
         token: ${{ secrets.API_GITHUB_TOKEN }}
