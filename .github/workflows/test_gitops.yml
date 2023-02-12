@@ -9,16 +9,23 @@ jobs:
     steps:
     - name: getting the oringl repo
       uses: actions/checkout@v3
+
       with:
         ref: master
         fetch-depth: '0'
     
     - name: get the version and set it as output
+      id: get_tags
       run: |
         git checkout master
         echo "the tag is $(git describe --tags)"
+        echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
       # outputs: ${{ steps. }}
         
+
+    - name: print output
+      run: |
+        echo "${{ steps.get_tags.outputs.tag }}"
 
     - name: checkout
       uses: actions/checkout@v3
