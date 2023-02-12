@@ -86,7 +86,9 @@ jobs:
         git config --global user.name "github actions"
 
         git add values.yaml
-        git commit -m "new version | Git Hub Actions"
+        git commit -m "new version | Git Hub Actions"\
+        
+        git push origin master
       
       
 
