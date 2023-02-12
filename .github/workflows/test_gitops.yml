@@ -7,6 +7,15 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+    - name: getting the oringl repo
+      uses: actions/checkout@v3
+    
+    - name: get the version and set it as output
+      run: |
+        echo "the tag is $(git describe --tags)"
+      # outputs: ${{ steps. }}
+        
+
     - name: checkout
       uses: actions/checkout@v3
       with:
@@ -17,4 +26,5 @@ jobs:
     - name: change version
       run: |
         pushd todo_chart
-        ls   
+        ls
+
