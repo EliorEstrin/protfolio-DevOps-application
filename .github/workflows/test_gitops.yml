@@ -9,6 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        repository: elior7557/protfolio_gitops
+        repository: elior7557/protfolio_charts
         ref: master
         token: ${{ secrets.API_GITHUB_TOKEN }}
