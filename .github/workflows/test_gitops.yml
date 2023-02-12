@@ -9,6 +9,8 @@ jobs:
     steps:
     - name: getting the oringl repo
       uses: actions/checkout@v3
+      with:
+        ref: master
     
     - name: get the version and set it as output
       run: |
