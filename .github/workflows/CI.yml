@@ -12,7 +12,7 @@ on:
 
 jobs:
 
-  build:
+  CI:
 
     runs-on: ubuntu-latest
     strategy:
@@ -69,7 +69,12 @@ jobs:
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
 
-
+  CD:
+    needs: [CI]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
     - name: checkout charts repo
       if: ${{ github.ref == 'refs/heads/master' }}
       uses: actions/checkout@v3
@@ -94,7 +99,7 @@ jobs:
         
         git push origin master
       
-      
+        
 
 
 
