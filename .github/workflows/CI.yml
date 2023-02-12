@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "master", "devops", "feature/*"]
+    branches: [ "master", "devops", "feature/*", "test"]
   pull_request:
     branches: [ "master" ]
 
@@ -20,29 +20,30 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
+    # - name: Set up Python ${{ matrix.python-version }}
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: |
-        pushd application/
-        python -m pip install --upgrade pip
-        pip install -r pytest-requirments.txt
+    # - name: Install dependencies
+    #   run: |
+    #     pushd application/
+    #     python -m pip install --upgrade pip
+    #     pip install -r pytest-requirments.txt
 
-    - name: Build the Docker compose
-      run: |
-        docker build ./application -t ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test
-        docker compose -f application/docker-compose.yml up -d
+    # - name: Build the Docker compose
+    #   run: |
+    #     docker build ./application -t ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test
+    #     docker compose -f application/docker-compose.yml up -d
 
-    - name: Test with pytest
-      run: |
-        sleep 5
-        pytest application/
+    # - name: Test with pytest
+    #   run: |
+    #     sleep 5
+    #     pytest application/
 
 ## Calculate Version only if on main
     - name: Bump version and push tag
+      id: tag
       # Will be changed to master soon
       if: ${{ github.ref == 'refs/heads/master' }}
       uses: anothrNick/github-tag-action@1.61.0
@@ -53,18 +54,31 @@ jobs:
         INITIAL_VERSION: 1.0.0
         DEFAULT_BRANCH: devops
 
-    - name: Login to Docker Hub
-      if: ${{ github.ref == 'refs/heads/master' }}
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    # - name: Login to Docker Hub
+    #   if: ${{ github.ref == 'refs/heads/master' }}
+    #   uses: docker/login-action@v2
+    #   with:
+    #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+    #     password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Publish to Docker Hub
-      if: ${{ github.ref == 'refs/heads/master' }}
+    # - name: Publish to Docker Hub
+    #   if: ${{ github.ref == 'refs/heads/master' }}
+    #   run: |
+    #     docker tag ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
+    #     docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
+
+
+    - name: checkout charts repo
+      uses: actions/checkout@v3
+      with:
+        repository: elior7557/protfolio_charts
+        ref: master
+        token: ${{ secrets.API_GITHUB_TOKEN }}
+
+    - name: change version
       run: |
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
+        echo "${{ steps.tag.outputs.new_tag }}"
+        ls
       
       
 

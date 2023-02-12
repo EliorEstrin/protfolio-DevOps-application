@@ -1,41 +1,41 @@
-name: Tets GitOps Update
-on:
-  push:
-    branches:
-      - test
-jobs:
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-    - name: getting the oringl repo
-      uses: actions/checkout@v3
+# name: Tets GitOps Update
+# on:
+#   push:
+#     branches:
+#       - test
+# jobs:
+#   build:
+#     runs-on: ubuntu-22.04
+#     steps:
+#     - name: getting the oringl repo
+#       uses: actions/checkout@v3
 
-      with:
-        ref: master
-        fetch-depth: '0'
+#       with:
+#         ref: master
+#         fetch-depth: '0'
     
-    - name: get the version and set it as output
-      id: get_tags
-      run: |
-        git checkout master
-        echo "the tag is $(git describe --tags)"
-        echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
-      # outputs: ${{ steps. }}
-        
+#     - name: get the version and set it as output
+#       id: get_tags
+#       run: |
+#         git checkout master
+#         echo "the tag is $(git describe --tags)"
+#         echo "tag=$(git describe --tags)" >> $GITHUB_OUTPUT
 
-    - name: print output
-      run: |
-        echo "${{ steps.get_tags.outputs.tag }}"
 
-    - name: checkout
-      uses: actions/checkout@v3
-      with:
-        repository: elior7557/protfolio_charts
-        ref: master
-        token: ${{ secrets.API_GITHUB_TOKEN }}
+#     - name: print output
+#       run: |
+#         echo "${{ steps.get_tags.outputs.tag }}"
 
-    - name: change version
-      run: |
-        pushd todo_chart
-        ls
+
+#     - name: checkout
+#       uses: actions/checkout@v3
+#       with:
+#         repository: elior7557/protfolio_charts
+#         ref: master
+#         token: ${{ secrets.API_GITHUB_TOKEN }}
+
+#     - name: change version
+#       run: |
+#         pushd todo_chart
+#         ls
 
