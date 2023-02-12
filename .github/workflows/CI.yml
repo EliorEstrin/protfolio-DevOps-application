@@ -81,7 +81,12 @@ jobs:
         cd todo_chart
         new_tag="${{ steps.tag.outputs.new_tag }}"
         sed -i "s/tag:.*/tag: $new_tag/" values.yaml
-        cat values.yaml
+        
+        git config --global user.email "github@git.com"
+        git config --global user.name "github actions"
+
+        git add values.yaml
+        git commit -m "new version | Git Hub Actions"
       
       
 
