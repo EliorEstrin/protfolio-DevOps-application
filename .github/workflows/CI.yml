@@ -75,7 +75,7 @@ jobs:
         ref: master
         token: ${{ secrets.API_GITHUB_TOKEN }}
 
-    - name: change version
+    - name: change version and push change to gitops repo
       run: |
         echo "${{ steps.tag.outputs.new_tag }}"
         ls
