@@ -1,10 +1,20 @@
 from flask import Flask, request, render_template, jsonify, make_response
 import mongo
+import datetime, logging, sys, json_logging
+
 
 app = Flask(__name__)
+json_logging.init_flask(enable_json=True)
+json_logging.init_request_instrument(app)
+
+# init the logger as usual
+logger = logging.getLogger("application-logger")
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler(sys.stdout))
 
 @app.route('/', methods=['GET'])
 def index():
+    logger.info("Received request for index page")
     return render_template('index.html')
 
 
@@ -16,6 +26,7 @@ def tasks_get():
     Returns:
         JSON: The list of all tasks in the database.
     """
+    logger.info("Received request for gettint all the tasks")
     tasks = mongo.get_Tasks()
     print(type(tasks))
     return jsonify(tasks)
@@ -46,6 +57,7 @@ def tasks_post():
         "id": "5f4c6569cbc97f0bcb91eabd"
     }
     """
+    logger.info("Received request for creating a tasks")
     data = request.get_json()
     print(f"data recived in response is: {data}")
     # saving it to a database
@@ -65,6 +77,7 @@ def delete_task_route(task_id):
     Returns:
         HTTP response with either a success status and the id of the deleted task or an error message with appropriate HTTP status code.
     """
+    logger.info("Received request for creating a tasks")
     result = mongo.delete_task(task_id)
     if result == "Error: Task not found":
         return result, 404
@@ -166,6 +179,7 @@ def tasks_status(status):
     Returns:
     JSON object: Tasks sorted by priority of the given status.
     """
+
     tasks = mongo.sort_by_priority(status)
     print(type(tasks))
     return jsonify(tasks)
@@ -177,4 +191,4 @@ def test():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',debug=true)
