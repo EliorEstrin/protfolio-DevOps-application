@@ -89,8 +89,8 @@ jobs:
         git status
 
         git add values.yaml
-        # git commit -m "new version | Git Hub Actions"
-        # git push origin master
+        git commit -m "new version | Git Hub Actions"
+        git push origin master
       
         
 
