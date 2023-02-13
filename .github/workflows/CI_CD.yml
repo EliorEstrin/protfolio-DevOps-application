@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ "master", "devops", "feature/*", "test"]
+    branches: [ "master", "devops", "feature/*", "hotfix_ci"]
 
 jobs:
   CI:
