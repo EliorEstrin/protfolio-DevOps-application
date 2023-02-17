@@ -1,23 +1,24 @@
 # Welcome
-
-## Prerequisites
+## Prerequisites To Run The Appplication
 - docker
+- docker compose
 
-## about the application
+## About The Application
 
-this repository is a python based application developed in a REST api fassion.
+This repository is a python based application developed in a REST api fassion.
 the purpose of this application to manage tasks.
 it has the route belows:
 
-- GET /api/tasks - returns all tasks
-- POST /api/tasks - adds a task
-- GET /api/tasks/<id> - gets a specific task based on an id
-- PUT /api/tasks/<id> - update a specific task based on id
+- **GET /api/tasks** - returns all tasks
+- **POST /api/tasks** - adds a task
+- **GET /api/tasks/<id>** - gets a specific task based on an id
+- **PUT /api/tasks/<id>** - update a specific task based on id
+- **DELETE /api/tasks/<id>** - deletes a specific task based on id
 
 the application is connected to a mongodb database that saves the data in a uniqe collection.
 
 
-## Installation and Running the Application
+## Installation And Running The Application
 
 1. Clone the repository:
 ```
@@ -36,7 +37,7 @@ docker compose up -d
 
 Open your web browser and navigate to http://localhost:5000 to access the application.
 
-## another files in this repo:
+## Another files in this repo:
 
 test_e2e.py - file for testing the application using pytest. it has test for each route 
 this repo contains as well a `.github worklows` folder which contains the CI-CD for this applcation
@@ -47,4 +48,5 @@ this repo contains as well a `.github worklows` folder which contains the CI-CD 
 3. test - testing the application using pytest
 4. calculate version and publish - calculating the version based on the recent tag and publishing the image to a private dockerhub repository
 5. deploy - update to gitops repository which is currently private, and then argocd deploys the application
+
 
