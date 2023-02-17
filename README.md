@@ -1,55 +1,33 @@
-# Welcome
-## Prerequisites To Run The Appplication
-- docker
-- docker compose
+# Devops Protfilio
 
-## About The Application
+This is a DevOps portfolio project that demonstrates the entire software development process, from ideation to continuous integration and delivery, by effectively implementing DevOps methodologies. It highlights the importance of DevOps practices in software development.
 
-This repository is a python based application developed in a REST api fassion.
-the purpose of this application to manage tasks.
-it has the route belows:
+## Project Details
+ * The project employs various technologies and methodologies:
+ * Front-end: Bootstrap, CSS, HTML, and jQuery are used for developing the website's front-end.
+ * Back-end: Flask is used to create a REST API to connect with the website's front-end.
+ * Database: MongoDB is used to store and manage data in the application.
+ * Testing: Docker Compose with Pytest is employed for testing the application, allowing for early detection of potential issues.
+ * CI/CD: GitHub Actions are used to automate the Continuous Integration and Delivery processes, resulting in a faster and more efficient development cycle.
+ * Deployment: A Helm chart was created for the application, enabling easy deployment with ArgoCD.
 
+## Git stragey
+ * main based development
+ * main is the production branch
+ * feature are developed on feateure/* branches
+ * CI tags new version based on the recent tags
 
-- **GET /api/tasks** - returns all tasks
-- **POST /api/tasks** - adds a task
-- **GET /api/tasks/\<id>** - gets a specific task based on an id
-- **PUT /api/tasks/\<id>** - update a specific task based on id
-- **DELETE /api/tasks/\<id>** - deletes a specific task based on id
+ ## Documentation Sources
+* [Docker & Docker-Compose](https://www.docs.docker.com/)
+* [Nginx](https://nginx.org/en/docs/)
+* [K8S](https://kubernetes.io/docs/home/)
+* [Helm](https://helm.sh/docs/)
+* [mongoDB](https://www.mongodb.com/docs/)
+* [Bitnami-Charts](https://github.com/bitnami/charts)
+* [Jenkins](https://www.jenkins.io/doc/book/)
+* [Terraform](https://www.terraform.io/docs)
+* [GCP](https://cloud.google.com/docs)
+* [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 
-the application is connected to a mongodb database that saves the data in a uniqe collection.
+# Happy Deplpying
 
-
-## Installation And Running The Application
-
-1. Clone the repository:
-```
-git clone https://github.com/elior7557/task-managment-app.git
- ```
-
-2. Change into the project directory:
-```
-cd task-managment-app/app
-```
-3. Start the application with docker-compose
-```
-docker compose up -d
-```
-
-
-Open your web browser and navigate to http://localhost:5000 to access the application.
-
-## Another files in this repo:
-
-- test_e2e.py - file for testing the application using pytest. it has test for each route 
-- this repo contains as well a `.github worklows` folder which contains the CI-CD for this applcation
-- Nginx folder - contains an nginx configuration to allow the option of running the application with nginx as a revese proxy
-- 
-
-### Steps of CI-CD
-1. Clone 
-2. build - build the application code using docker-compose
-3. test - testing the application using pytest
-4. calculate version and publish - calculating the version based on the recent tag and publishing the image to a private dockerhub repository
-5. deploy - update to gitops repository which is currently private, and then argocd deploys the application
-
-#
