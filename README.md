@@ -2,6 +2,8 @@
 
 This is a DevOps portfolio project that demonstrates the entire software development process, from ideation to continuous integration and delivery, by effectively implementing DevOps methodologies. It highlights the importance of DevOps practices in software development.
 
+![CI-Status](https://github.com/elior7557/protfolio-DevOps-application/actions/workflows/CI_CD.yml/badge.svg)
+
 ## Project Details
  * The project employs various technologies and methodologies:
  * Front-end: Bootstrap, CSS, HTML, and jQuery are used for developing the website's front-end.
