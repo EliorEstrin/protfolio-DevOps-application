@@ -23,18 +23,17 @@ the application is connected to a mongodb database that saves the data in a uniq
 
 1. Clone the repository:
 ```
-git clone https://github.com/elior7557/task-managment-app.git
+git clone https://github.com/elior7557/protfolio-DevOps-application.git
  ```
 
 2. Change into the project directory:
 ```
-cd task-managment-app/app
+cd protfolio-DevOps-application/app
 ```
 3. Start the application with docker-compose
 ```
 docker compose up -d
 ```
-
 
 Open your web browser and navigate to http://localhost:5000 to access the application.
 
@@ -42,14 +41,5 @@ Open your web browser and navigate to http://localhost:5000 to access the applic
 
 - test_e2e.py - file for testing the application using pytest. it has test for each route 
 - this repo contains as well a `.github worklows` folder which contains the CI-CD for this applcation
-- Nginx folder - contains an nginx configuration to allow the option of running the application with nginx as a revese proxy
-- 
+- Nginx folder - contains an nginx configuration to allow the option of running the application with nginx as a revese proxy 
 
-### Steps of CI-CD
-1. Clone 
-2. build - build the application code using docker-compose
-3. test - testing the application using pytest
-4. calculate version and publish - calculating the version based on the recent tag and publishing the image to a private dockerhub repository
-5. deploy - update to gitops repository which is currently private, and then argocd deploys the application
-
-#

@@ -29,5 +29,5 @@ This is a DevOps portfolio project that demonstrates the entire software develop
 * [GCP](https://cloud.google.com/docs)
 * [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 
-# Happy Deplpying
+# Happy Deploying
 
