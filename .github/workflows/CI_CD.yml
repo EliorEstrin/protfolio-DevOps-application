@@ -96,6 +96,7 @@ jobs:
         token: ${{ secrets.API_GITHUB_TOKEN }}
 
     - name: change version and push change to gitops repo
+      id: gitops_action
       if: ${{ github.ref == 'refs/heads/master' }}
       run: |
         cd application_chart
