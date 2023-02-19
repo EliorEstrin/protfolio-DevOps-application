@@ -89,7 +89,7 @@ jobs:
 
     - name: Slack Notification
       # send message even if the ci fails
-      # if: (${{ github.ref == 'refs/heads/master'}} && always())
+      if: (${{ github.ref == 'refs/heads/master'}} && always())
       uses: act10ns/slack@v2.0.0
       with:
         status: starting
