@@ -17,6 +17,7 @@ jobs:
         python-version: ["3.10"]
 
     steps:
+
     - uses: act10ns/slack@v2.0.0
       with:
         status: starting
@@ -85,15 +86,16 @@ jobs:
     needs: CI
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: checkout charts repo
-      if: ${{ github.ref == 'refs/heads/master' }}
-      uses: actions/checkout@v3
+
+    - name: Slack Notification
+      # send message even if the ci fails
+      # if: (${{ github.ref == 'refs/heads/master'}} && always())
+      uses: act10ns/slack@v2.0.0
       with:
-        repository: elior7557/protfolio_gitops
-        ref: master
-        token: ${{ secrets.API_GITHUB_TOKEN }}
+        status: starting
+        message: Starting CD....
+      
+    - uses: actions/checkout@v3
 
     - name: change version and push change to gitops repo
       id: gitops_action
