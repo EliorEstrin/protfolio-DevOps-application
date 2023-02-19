@@ -104,6 +104,7 @@ jobs:
 
     - name: change version and push change to gitops repo
       # if: ${{ github.ref == 'refs/heads/master' }}
+      id: gitops-action
       run: |
         cd application_chart
         new_tag=${{needs.CI.outputs.new_tag}}
