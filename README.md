@@ -20,17 +20,16 @@ This is a DevOps portfolio project that demonstrates the entire software develop
  * CI tags new version based on the recent tags
 
  ## Documentation Sources
-* [Docker & Docker-Compose](https://www.docs.docker.com/)
+* [Docker & Docker-Compose](https://docs.docker.com/)
 * [Nginx](https://nginx.org/en/docs/)
 * [K8S](https://kubernetes.io/docs/home/)
 * [Helm](https://helm.sh/docs/)
 * [mongoDB](https://www.mongodb.com/docs/)
 * [Bitnami-Charts](https://github.com/bitnami/charts)
-* [Jenkins](https://www.jenkins.io/doc/book/)
 * [Terraform](https://www.terraform.io/docs)
 * [GCP](https://cloud.google.com/docs)
 * [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
-
+* [GitHubAction](https://docs.github.com/en/actions)
 ## Architecture
   ![arhitecture](./Architecture.png)
 
