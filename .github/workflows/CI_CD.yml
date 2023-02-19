@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "master", "devops", "feature/*"]
 
+env:
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
   CI:
     runs-on: ubuntu-latest
@@ -62,6 +65,13 @@ jobs:
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:test ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/protolio-todo:$(git describe --tags)
 
+    - name: Slack Notification
+      if: ${{ github.ref != 'refs/heads/main'}}
+      uses: act10ns/slack@v1
+      with:
+        status: ${{ job.status }}
+        steps: ${{ toJson(steps) }}
+        channel: '#ci-cd'  
   CD:
     needs: CI
     runs-on: ubuntu-latest
