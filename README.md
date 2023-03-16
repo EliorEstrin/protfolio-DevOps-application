@@ -4,6 +4,11 @@ This is a DevOps portfolio project that demonstrates the entire software develop
 
 ![CI-Status](https://github.com/elior7557/protfolio-DevOps-application/actions/workflows/CI_CD.yml/badge.svg)
 
+## Project Repos
+* [Source Code](#)
+* [infrastructure](https://github.com/elior7557/protfolio_infra.git)
+* [GitOps](https://github.com/elior7557/protfolio_gitops.git)
+
 ## Project Details
  * The project employs various technologies and methodologies:
  * Front-end: Bootstrap, CSS, HTML, and jQuery are used for developing the website's front-end.
