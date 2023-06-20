@@ -6,8 +6,8 @@ This is a DevOps portfolio project that demonstrates the entire software develop
 
 ## Project Repos
 * [Source Code](#)
-* [infrastructure](https://github.com/elior7557/protfolio_infra.git)
-* [GitOps](https://github.com/elior7557/protfolio_gitops.git)
+* [infrastructure](https://github.com/PhantomPixelist/protfolio_infra)
+* [GitOps](https://github.com/PhantomPixelist/protfolio_gitops)
 
 ## Project Details
  * The project employs various technologies and methodologies:
